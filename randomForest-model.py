@@ -45,6 +45,8 @@ categorical_features = train.select_dtypes(include=['object']).drop(['TCOLE_RACE
 preprocessor = ColumnTransformer( transformers=[('num', numeric_transformer, numeric_features),
                                                 ('cat', categorical_transformer, categorical_features)])
 # Fitting randomForest Model Training Set
+rf = Pipeline(steps=[('preprocessor', preprocessor),
+('classifier', RandomForestClassifier(n_estimators = 13, max_depth=10))])
 X_train = train.drop('TCOLE_RACE_ETHNICITY', axis=1)
 y_train = train['TCOLE_RACE_ETHNICITY']
 rf.fit(X_train ,y_train)
