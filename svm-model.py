@@ -46,6 +46,8 @@ preprocessor = ColumnTransformer( transformers=[('num', numeric_transformer, num
 # Fitting SVM Model
 svm_classifier = Pipeline(steps=[('preprocessor', preprocessor),
 ('classifier', SVC(kernel="poly", degree=3))])
+X_train = train.drop('TCOLE_RACE_ETHNICITY', axis=1)
+y_train = train['TCOLE_RACE_ETHNICITY']
 svm_classifier.fit(X_train, y_train)
 
 # Fitting Training Set
@@ -101,6 +103,8 @@ def plot_learning_curves(model, X, y):
 plot_learning_curves(svm_classifier, X_train, y_train)
 
 # Fitting Test Set
+X_test = test.drop('TCOLE_RACE_ETHNICITY', axis=1)
+y_test = test['TCOLE_RACE_ETHNICITY']
 test_predSVM = svm_classifier.predict (X_test)
 test_precnSVM = precision_score (y_test, test_predSVM, average=None)
 test_recalSVM = recall_score (y_test, test_predSVM, average=None)
